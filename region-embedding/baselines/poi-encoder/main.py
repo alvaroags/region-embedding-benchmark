@@ -1,13 +1,14 @@
 # from model import POISet, EmbeddingModel
 from POIEmbedding import PreProcess, POI2Vec
 from model import POISet, EmbeddingModel
+from torch_geometric.nn import Node2Vec
 import torch
 import torch.utils.data as tud
 
 def preprocess():
     # Preprocess
-    filename_boroughs = '../../data/cta_nyc.csv'
-    filename_pois = '../../data/new-york-pois.csv.gz'
+    filename_boroughs = '/home/alvaro/Documentos/GitHub/region-embedding-benchmark/region-embedding/baselines/poi-encoder/CensusTractsTIGER2010.csv'
+    filename_pois = '/home/alvaro/Documentos/GitHub/region-embedding-benchmark/region-embedding/baselines/poi-encoder/chicago-pois.csv.gz'
     PreProcess(filename_pois, filename_boroughs, h3=False).run() # Add the path to the POI and boroughs data here
 
 def poi2vec_train():
@@ -63,6 +64,6 @@ def main():
 
 
 if __name__ == '__main__':
-    preprocess()
-    # poi2vec_train()
-    # main()
+    # preprocess()
+    poi2vec_train()
+    main()

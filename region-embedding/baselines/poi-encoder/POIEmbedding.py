@@ -62,8 +62,8 @@ class PreProcess:
 
     def read_boroughs_data(self):
         self.boroughs = pd.read_csv(self.filename_boroughs)
-        self.boroughs["geometry"] = self.boroughs["geometry"].apply(wkt.loads)
-        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="geometry", crs="EPSG:4326")
+        self.boroughs["the_geom"] = self.boroughs["the_geom"].apply(wkt.loads)
+        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="the_geom", crs="EPSG:4326")
 
         if self.h3:
             self.boroughs = geo.H3Interpolation(self.boroughs).interpolate(9)
@@ -77,7 +77,7 @@ class PreProcess:
 
     def create_graph(self):
 
-        column = 'BoroCT2020'
+        column = 'GEOID10'
         if self.h3:
             column = "h3"
         

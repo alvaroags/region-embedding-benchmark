@@ -17,7 +17,7 @@ from shapely import wkb
 import os
 
 class QuackosmData():
-    def __init__(self, pbf_path, output_path='../data', region_name='New York City, United States') -> None:
+    def __init__(self, pbf_path, output_path='./data', region_name='Chicago, United States') -> None:
         self.pbf_path = pbf_path
         self.output_path = output_path
         self.region_name = region_name
@@ -32,7 +32,7 @@ class QuackosmData():
 
     def _reader(self, parquet_file, tags_filter):
         reader = PbfFileReader(geometry_filter=self.geom, tags_filter=tags_filter)
-        gpq_path = reader.convert_pbf_to_gpq(self.pbf_path)
+        gpq_path = reader.convert_pbf_to_parquet(self.pbf_path)
 
 
         parquet_table = io.read_geoparquet_table(gpq_path)
@@ -114,16 +114,16 @@ class QuackosmData():
 
 def main():
     from filters import HEX2VEC_FILTER, REDUCED_FILTER
-    quack = QuackosmData("/media/gegen07/Expansion/data/mestrado/region-embedding/new-york-latest.osm.pbf", region_name="New York City, United States")
+    quack = QuackosmData("./illinois-latest.osm.pbf", region_name="Chicago, United States")
     
-    # pois = quack.get_pois_osm(REDUCED_FILTER)
-    # print(len(pois))
+    pois = quack.get_pois_osm(REDUCED_FILTER)
+    print(len(pois))
     
     streets = quack.get_streets_osm()
     print(streets.head())
 
-    # buildings = quack.get_buildings()
-    # print(buildings.head())
+    buildings = quack.get_buildings()
+    print(buildings.head())
 
 if __name__ == "__main__":
     main()
