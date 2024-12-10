@@ -209,3 +209,5 @@ cython_debug/
 /region-embedding/util/region-embedding/Scripts
 /region-embedding/baselines/poi-encoder/duckdb
 /region-embedding/baselines/poi-encoder/duckdb/bin
+/region-embedding/util/duckdb
+/region-embedding/util/duckdb
