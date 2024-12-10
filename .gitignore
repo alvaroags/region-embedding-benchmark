@@ -34,6 +34,7 @@
 !**/region_embedding.csv
 !**/ny_geovex_emb.csv
 !**/ny_hex2vec_emb.csv
+region-embedding/util/region-embedding
 
 **/catboost_info/**
 !**/functionalZone/data/nyc-landuse-area-11-classes.csv
@@ -206,3 +207,5 @@ cython_debug/
 
 /region-embedding/util/region-embedding/Lib
 /region-embedding/util/region-embedding/Scripts
+/region-embedding/baselines/poi-encoder/duckdb
+/region-embedding/baselines/poi-encoder/duckdb/bin
