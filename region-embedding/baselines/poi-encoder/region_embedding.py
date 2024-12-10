@@ -11,8 +11,13 @@ def main(h3=False):
         column = 'GEOID'
         name_index = column
 
+<<<<<<< Updated upstream
     embeddings = torch.load('/home/gegen07/dev/projects/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/poi-encoder-nyc-h3.tensor', map_location=torch.device('cpu'))['in_embed.weight']
     pois = pd.read_csv('/home/gegen07/dev/projects/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/pois-nyc-h3.csv')[['fclass', column]]
+=======
+    embeddings = torch.load('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_poi-encoder.tensor')['in_embed.weight']
+    pois = pd.read_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_pois.csv')[['fclass', column]]
+>>>>>>> Stashed changes
 
     # pois['embedding'] = pois['fclass'].apply(lambda x: np.array(embeddings[x]))
     pois['embedding'] = pois['fclass'].apply(lambda x: embeddings[x])
@@ -25,8 +30,13 @@ def main(h3=False):
     region = pd.DataFrame.from_dict(d, orient='index', columns=[str(i) for i in range(64)])
     region.index.name = name_index
     region = region.reset_index()
+<<<<<<< Updated upstream
     region.to_csv('./data/region_embedding-nyc-h3.csv', index=False)
     # region.to_parquet('./data/region_embedding.parquet', index=False)
+=======
+    region.to_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF-region_embedding.csv', index=False)
+    region.to_parquet('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF-region_embedding.parquet', index=False)
+>>>>>>> Stashed changes
     
 if __name__ == "__main__":
     main(h3=True)

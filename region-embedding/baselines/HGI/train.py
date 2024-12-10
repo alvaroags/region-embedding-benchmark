@@ -19,7 +19,7 @@ import os
 def parse_args():
     """ parsing the arguments that are used in HGI """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--city', type=str, default='ny', help='city name, such as shenzhen')
+    parser.add_argument('--city', type=str, default='SF', help='city name, such as shenzhen')
     parser.add_argument('--dim', type=int, default=64, help='Dimension of output representation')
     parser.add_argument('--alpha', type=float, default=0.5, help='the hyperparameter to balance mutual information')
     parser.add_argument('--attention_head', type=int, default=4)
@@ -27,9 +27,9 @@ def parse_args():
     parser.add_argument('--max_norm', type=float, default=0.9)
     parser.add_argument('--gamma', type=float, default=1)
     parser.add_argument('--warmup_period', type=int, default=40)
-    parser.add_argument('--epoch', type=int, default=2000)
-    parser.add_argument('--device', type=str, default='cuda')
-    parser.add_argument('--save_name', type=str, default='ny_emb')
+    parser.add_argument('--epoch', type=int, default=20)
+    parser.add_argument('--device', type=str, default='cpu')
+    parser.add_argument('--save_name', type=str, default='SF_emb')
     return parser.parse_args()
 
 
@@ -78,8 +78,8 @@ if __name__ == '__main__':
             lowest_loss = loss
         t.set_postfix(loss='{:.4f}'.format(loss), refresh=True)
 
-    torch.save(region_emb_to_save[0], f'./data/{args.save_name}.torch')
-    torch.save(region_emb_to_save[1], './data/poi_embedding.torch')
+    torch.save(region_emb_to_save[0], f'/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/{args.save_name}.torch')
+    torch.save(region_emb_to_save[1], '/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_poi_embedding.torch')
     print(f"Region embeddings of {args.city} has been save to ./data/{args.save_name}")
 
 

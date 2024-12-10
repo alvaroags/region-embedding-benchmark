@@ -62,8 +62,8 @@ class PreProcess:
 
     def read_boroughs_data(self):
         self.boroughs = pd.read_csv(self.filename_boroughs)
-        self.boroughs["geometry"] = self.boroughs["geometry"].apply(wkt.loads)
-        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="geometry", crs="EPSG:4326")
+        self.boroughs["the_geom"] = self.boroughs["the_geom"].apply(wkt.loads)
+        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="the_geom", crs="EPSG:4326")
 
         if self.h3:
             self.boroughs = geo.H3Interpolation(self.boroughs).interpolate(9)
@@ -77,7 +77,7 @@ class PreProcess:
 
     def create_graph(self):
 
-        column = 'BoroCT2020'
+        column = 'GEOID'
         if self.h3:
             column = "h3"
         
@@ -111,8 +111,8 @@ class PreProcess:
         self.edges['weight'] = self.edges['weight'].apply(lambda x: (x-mi)/(ma-mi))
     
     def save_data(self):
-        self.pois.to_csv('./data/pois.csv', index=False)
-        self.edges.to_csv('./data/edges.csv', index=False)
+        self.pois.to_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_pois.csv', index=False)
+        self.edges.to_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_edges.csv', index=False)
 
     def run(self):
         self.read_boroughs_data()
@@ -123,12 +123,12 @@ class PreProcess:
     
 class POI2Vec:
     def __init__(self):
-        if os.path.exists("./data/pois.csv") and os.path.exists("./data/edges.csv"):
-            self.pois = pd.read_csv("./data/pois.csv")
+        if os.path.exists("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_pois.csv") and os.path.exists("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_edges.csv"):
+            self.pois = pd.read_csv("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_pois.csv")
             self.pois["geometry"] = self.pois["geometry"].apply(wkt.loads)
             self.pois = gpd.GeoDataFrame(self.pois, geometry="geometry", crs="EPSG:4326")
 
-            self.edges = pd.read_csv("./data/edges.csv")
+            self.edges = pd.read_csv("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_edges.csv")
             print(self.edges)
         else:
             raise FileNotFoundError("Files not found. Run Preprocess first.")
@@ -169,10 +169,10 @@ class POI2Vec:
                     self.second_class_walks[-1].append(second_class)
     
     def save_walks(self):
-        pkl.dump(self.second_class_walks, open("./data/second_class_walks.pkl", "wb"))
+        pkl.dump(self.second_class_walks, open("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_second_class_walks.pkl", "wb"))
     
     def read_walks(self):
-        self.second_class_walks = pkl.load(open("./data/second_class_walks.pkl", "rb"))
+        self.second_class_walks = pkl.load(open("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_second_class_walks.pkl", "rb"))
     
     def get_global_second_class_walks(self):
         self.global_second_class_walks = []

@@ -137,8 +137,8 @@ class Preprocess():
     
     def _read_boroughs_data(self):
         self.boroughs = pd.read_csv(self.boroughs_filename)
-        self.boroughs["geometry"] = self.boroughs["geometry"].apply(wkt.loads)
-        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="geometry", crs="EPSG:4326")
+        self.boroughs["the_geom"] = self.boroughs["the_geom"].apply(wkt.loads)
+        self.boroughs = gpd.GeoDataFrame(self.boroughs, geometry="the_geom", crs="EPSG:4326")
 
         if self.h3:
             self.boroughs = H3Interpolation(self.boroughs).interpolate(8)
@@ -161,8 +161,13 @@ class Preprocess():
         self.embedding_array = self.pois['embedding'].values.tolist()
 
     def _create_graph(self):
+<<<<<<< Updated upstream
         if os.path.exists('/content/edges.csv'):
             self.edges = pd.read_csv('/content/edges.csv')
+=======
+        if os.path.exists('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_edges.csv'):
+            self.edges = pd.read_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_edges.csv')
+>>>>>>> Stashed changes
             return
 
         column = 'BoroCT2020'
@@ -198,7 +203,11 @@ class Preprocess():
         ma = self.edges['weight'].max()
         self.edges['weight'] = self.edges['weight'].apply(lambda x: (x-mi)/(ma-mi))
 
+<<<<<<< Updated upstream
         self.edges.to_csv('/content/edges.csv', index=False)
+=======
+        self.edges.to_csv('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_edges.csv', index=False)
+>>>>>>> Stashed changes
     
     def _get_region_adjacency(self):
         import libpysal
@@ -214,8 +223,13 @@ class Preprocess():
     def _get_coarse_region_similarity(self):
         from sklearn.metrics.pairwise import cosine_similarity
 
+<<<<<<< Updated upstream
         if os.path.exists('/content/region_coarse_similarity.npy'):
             self.region_coarse_similarity = np.load('/content/region_coarse_similarity.npy')
+=======
+        if os.path.exists('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_region_coarse_similarity.npy'):
+            self.region_coarse_similarity = np.load('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_region_coarse_similarity.npy')
+>>>>>>> Stashed changes
             return
 
         onehot = self.pois[['index_right', 'fclass']]
@@ -223,11 +237,15 @@ class Preprocess():
 
         arr = onehot.values
 
+<<<<<<< Updated upstream
         ## Cosine Similarity using arr
         from sklearn.metrics.pairwise import cosine_similarity
         self.region_coarse_similarity = cosine_similarity(arr)
 
         with open('/content/region_coarse_similarity.npy', 'wb') as f:
+=======
+        with open('/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_region_coarse_similarity.npy', 'wb') as f:
+>>>>>>> Stashed changes
             np.save(f, self.region_coarse_similarity)
     
     def get_data_torch(self):
@@ -266,6 +284,7 @@ class Preprocess():
         return data
     
 if __name__ == "__main__":
+<<<<<<< Updated upstream
     pois_filename = "/content/drive/MyDrive/Dados/region-embedding-benchmark/pois.csv"
     boroughs_filename = "/content/drive/MyDrive/Dados/region-embedding-benchmark/data/chicago/cta_chicago.csv"
     # edges_filename = "../../poi-encoder/data/edges.csv"
@@ -278,4 +297,18 @@ if __name__ == "__main__":
         pkl.dump(data, f)
 
     print("Data saved to /content/ny_hgi_data.pkl")
+=======
+    pois_filename = "/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_pois.csv"
+    boroughs_filename = "/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/Census_2020__Tracts_for_San_Francisco.csv"
+    edges_filename = "/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_edges.csv"
+    emb_filename = "/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF_poi-encoder.tensor"
+    pre = Preprocess(pois_filename, boroughs_filename, emb_filename)
+    data = pre.get_data_torch()
+    # print(data)
+
+    with open("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_hgi_data.pkl", "wb") as f:
+        pkl.dump(data, f)
+
+    print("Data saved to /content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/HGI/data/SF_hgi_data.pkl")
+>>>>>>> Stashed changes
 

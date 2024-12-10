@@ -17,7 +17,11 @@ from shapely import wkb
 import os
 
 class QuackosmData():
+<<<<<<< Updated upstream
     def __init__(self, pbf_path, output_path='../data', region_name='Chicago, Illinois, United States') -> None:
+=======
+    def __init__(self, pbf_path, output_path='/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/util/data', region_name='San Francisco, United States') -> None:
+>>>>>>> Stashed changes
         self.pbf_path = pbf_path
         self.output_path = output_path
         self.region_name = region_name
@@ -114,7 +118,11 @@ class QuackosmData():
 
 def main():
     from filters import HEX2VEC_FILTER, REDUCED_FILTER
+<<<<<<< Updated upstream
     quack = QuackosmData("/media/gegen07/Expansion/data/mestrado/region-embedding/illinois-latest.osm.pbf", output_path="/media/gegen07/Expansion/data/mestrado/region-embedding/chicago-data-osm", region_name="Chicago, Illinois, United States")
+=======
+    quack = QuackosmData("/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/util/california-latest.osm.pbf", region_name="San Francisco, United States")
+>>>>>>> Stashed changes
     
     pois = quack.get_pois_osm(REDUCED_FILTER)
     print(len(pois))

@@ -1,13 +1,14 @@
 # from model import POISet, EmbeddingModel
 from POIEmbedding import PreProcess, POI2Vec
 from model import POISet, EmbeddingModel
+from torch_geometric.nn import Node2Vec
 import torch
 import torch.utils.data as tud
 
 def preprocess():
     # Preprocess
-    filename_boroughs = '../../data/cta_nyc.csv'
-    filename_pois = '../../data/new-york-pois.csv.gz'
+    filename_boroughs = '/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/Census_2020__Tracts_for_San_Francisco.csv'
+    filename_pois = '/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/util/data/san-francisco-pois.csv.gz'
     PreProcess(filename_pois, filename_boroughs, h3=False).run() # Add the path to the POI and boroughs data here
 
 def poi2vec_train():
@@ -58,11 +59,16 @@ def main():
             if i % 100 == 0:
                 print('epoch', e, 'iteration', i, loss.item(), 'loss_le', loss_le.item())
 
+<<<<<<< Updated upstream
     # embedding_weights = model.input_embedding()
     # torch.save(model.state_dict(), "./data/poi-encoder-chicago.tensor")
+=======
+    embedding_weights = model.input_embedding()
+    torch.save(model.state_dict(), "/content/drive/MyDrive/Colab_Notebooks/region-embedding-benchmark/region-embedding/baselines/poi-encoder/data/SF-poi-encoder.tensor")
+>>>>>>> Stashed changes
 
 
 if __name__ == '__main__':
-    preprocess()
-    # poi2vec_train()
-    # main()
+    # preprocess()
+    poi2vec_train()
+    main()
