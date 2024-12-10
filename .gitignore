@@ -204,3 +204,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+/region-embedding/util/region-embedding/Lib
+/region-embedding/util/region-embedding/Scripts
